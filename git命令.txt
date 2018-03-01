@@ -39,3 +39,23 @@ Git提供了一个命令git reflog用来记录你的每一次版本id变动
 HEAD指向的版本就是当前版本，因此，Git允许我们在版本的历史之间穿梭，使用命令git reset --hard commit_id。
 穿梭前，用git log可以查看提交历史，以便确定要回退到哪个版本。
 要重返未来，用git reflog查看命令历史，以便确定要回到未来的哪个版本。
+
+
+假设一开始你的本地和远程都是：
+a -> b -> c
+
+你想把HEAD回退到b，那么在本地就变成了：
+a -> b
+
+这个时候，如果没有远程库，你就接着怎么操作都行，比如：
+a -> b -> d
+
+但是在有远程库的情况下，你push会失败，因为远程库是 a->b->c，你的是 a->b->d
+
+做一个反向操作，把自己本地变成a -> b -> c -> d，注意b和d文件快照内容一莫一样，但是commit id肯定不同，再push上去远程也会变成 a -> b -> c -> d
+使用 git revert <commit_id>操作实现以退为进，
+git revert 不同于 git reset  它不会擦除"回退"之后的 commit_id ,而是正常的当做一次"commit"，产生一次新的操作记录，所以可以push，不会让你再pull
+
+git diff  是你工作区跟statge的比较，这个时候可以看你开发过程中修改了哪些内容
+git diff --cached 是看你stge区和仓库分支上的比较，你add后但是没有commit， 这个时候只是在stage中，可以确认下修改是否正确，如果正确无误可以commit合并到分支
+
