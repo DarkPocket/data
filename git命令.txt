@@ -18,5 +18,8 @@ git init
 git commit -m "commit info”
 
 
+git status命令可以让我们时刻掌握仓库当前的状态
 
+git diff顾名思义就是查看difference，显示的格式正是Unix通用的diff格式
 
+提交修改和提交新文件是一样的两步，第一步是git add：第二步git commit
